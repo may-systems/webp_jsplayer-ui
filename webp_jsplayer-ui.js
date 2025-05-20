@@ -23,7 +23,11 @@
 			wrap.setAttribute('data-lcgp-inst', id);
 			wrap.setAttribute('data-lcgp-src',  src);
 			wrap.classList.add('lcgp_wrap', 'lcgp_initialstate', 'lcgp_' + id);
-			if (addit_class) wrap.classList.add(addit_class);
+			if (addit_class) {
+				addit_class.toString().trim().split(/\s+/).forEach(function (cls) {
+					if (cls) wrap.classList.add(cls);
+				});
+			}
 
 			/* SuperWebP instance */
 			webp_jsplayer_instances[id] = new SuperWebP({ webp: img, auto_play: !!autoplay });
@@ -161,7 +165,7 @@
 		fs.innerHTML = '<div><img src="" rel:animated_src="' + src + '"></div>';
 		document.body.appendChild(fs);
 
-		webp_jsplayer_ui('#lcgp_fs_wrap div', true, origin.className, ['fullscreen']);
+		webp_jsplayer_ui('#lcgp_fs_wrap div', false, origin.className, ['fullscreen']);
 
 		/* click background to exit */
 		fs.addEventListener('click', function (e) {
